@@ -1,0 +1,129 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Poc Elm ExtJS</title>
+    <style>
+        html,head,body { padding:0; margin:0; }
+        body { font-family: calibri, helvetica, arial, sans-serif; }
+    </style>
+    <!-- ExtJS4 -->
+    <link rel="stylesheet" type="text/css" href="./libs/app.css">
+    <script type="text/javascript" src="./libs/OpenLayers.js"></script>
+    <script type="text/javascript" src="./libs/ext-all-debug.js"></script>
+
+
+    <!-- ExtJS4 -->
+    <script type="text/javascript" src="./poc-elm-ext.js"></script>
+
+<style>
+<!--
+
+#seite {
+  width:100%;
+  margin: 0 auto;
+  background-color:#60B5CC;
+}
+
+#kopfbereich {
+  background-color: #F0AD00;
+  border: 1px solid lightgrey;
+}
+
+.inhalt {
+  margin-left: 300px;
+  margin-right: 0px;
+  overflow: scroll;
+  height: 400px;
+  border: 1px solid lightgrey;
+}
+
+#spaltelinks {
+  float: left;
+  width:300px;
+  height: 400px;
+  background-color:#60B5CC;
+/*
+  background-color: #5A6378;
+  */
+}
+
+/*#spalterechts {
+  float: right;
+  width:50px;
+}*/
+
+#fussbereich {
+  clear: both;
+  background-color: #F0AD00;
+  border: 1px solid lightgrey;
+}
+-->
+</style>
+
+</head>
+<body style="background-color:#7FD13B">
+HTML-Seite<br>
+<div id="poc"></div>
+<script>
+    //var app = Elm.Poc.fullscreen();
+    var app = Elm.Poc.embed(document.getElementById('poc'));
+    var myPanels = [];
+
+    app.ports.settitle.subscribe(function(listLevelTitle){makePanel(listLevelTitle[0],listLevelTitle[1]);});
+
+    function makePanel(level, txtTitle) {
+
+        if (!myPanels[level]){
+
+            myPanels[level] = Ext.create('Ext.form.Panel', {
+                title: txtTitle,
+                width: '100%',
+                //height: '400px',
+                bodyPadding: 10,
+                renderTo: Ext.getElementById('inhalt' + level),
+                items: [{
+                    xtype: 'textfield',
+                    name: 'level',
+                    fieldLabel: 'Level',
+                    value: level,
+                    allowBlank: false  // requires a non-empty value
+                }, {
+                    xtype: 'textfield',
+                    name: 'msg',
+                    fieldLabel: 'Message to Elm',
+                    value: "Hallo Elm"
+                }, {
+                    xtype: 'button',
+                    text: 'Hallo Elm!',
+                    handler: function() {
+                        backToElm(myPanels[level].elmApp, level, this.up().items.items[1].getValue());
+                    }
+                }, {
+                    xtype: 'button',
+                    text: 'Elm in ExtJS4!',
+                    handler: function() {
+                        app = Elm.Poc.embed(document.getElementById('elmspace' + level));
+                        app.ports.settitle.subscribe(function(listLevelTitle){makePanel(listLevelTitle[0],listLevelTitle[1]);});
+                        myPanels[level].elmApp = app;
+                    }
+                }, {
+                    xtype: 'container',
+                    id: 'elmspace' + level,
+                    autoscroll: true
+                }]
+            });
+            myPanels[level].elmApp = app;
+        } else {
+            myPanels[level].setTitle(txtTitle);
+        }
+    };
+
+
+    function backToElm(elmApp, level, headerText) {
+        elmApp.ports.extvalues.send([level,headerText]);
+    }
+</script>
+HTML-Seite<br>
+</body>
+</html>

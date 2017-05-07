@@ -1,0 +1,320 @@
+var _user$project$Poc$settitle = _elm_lang$core$Native_Platform.outgoingPort(
+	'settitle',
+	function (v) {
+		return _elm_lang$core$Native_List.toArray(v).map(
+			function (v) {
+				return v;
+			});
+	});
+var _user$project$Poc$update = F2(
+	function (msg, model) {
+		var _p0 = msg;
+		switch (_p0.ctor) {
+			case 'Change':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{title: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'ChangeLevel':
+				var nl = A2(
+					_elm_lang$core$Result$withDefault,
+					0,
+					_elm_lang$core$String$toInt(_p0._0));
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{extPanelLevel: nl}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+			case 'Check':
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{btnText: 'Ext-Panel erstellen / Titel setzen'}),
+					_1: _user$project$Poc$settitle(
+						{
+							ctor: '::',
+							_0: _elm_lang$core$Basics$toString(model.extPanelLevel),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$core$Basics_ops['++'],
+									'Panel ',
+									A2(
+										_elm_lang$core$Basics_ops['++'],
+										_elm_lang$core$Basics$toString(model.extPanelLevel),
+										A2(_elm_lang$core$Basics_ops['++'], ': ', model.title))),
+								_1: {ctor: '[]'}
+							}
+						})
+				};
+			default:
+				return {
+					ctor: '_Tuple2',
+					_0: _elm_lang$core$Native_Utils.update(
+						model,
+						{extvalues: _p0._0}),
+					_1: _elm_lang$core$Platform_Cmd$none
+				};
+		}
+	});
+var _user$project$Poc$extvalues = _elm_lang$core$Native_Platform.incomingPort(
+	'extvalues',
+	_elm_lang$core$Json_Decode$list(_elm_lang$core$Json_Decode$string));
+var _user$project$Poc$Model = F4(
+	function (a, b, c, d) {
+		return {extPanelLevel: a, title: b, btnText: c, extvalues: d};
+	});
+var _user$project$Poc$init = {
+	ctor: '_Tuple2',
+	_0: A4(
+		_user$project$Poc$Model,
+		0,
+		'Hallo Ext',
+		'Ext-Panel erstellen / Titel setzen',
+		{ctor: '[]'}),
+	_1: _elm_lang$core$Platform_Cmd$none
+};
+var _user$project$Poc$GreetingFromExtJS = function (a) {
+	return {ctor: 'GreetingFromExtJS', _0: a};
+};
+var _user$project$Poc$subscriptions = function (model) {
+	return _user$project$Poc$extvalues(_user$project$Poc$GreetingFromExtJS);
+};
+var _user$project$Poc$Check = {ctor: 'Check'};
+var _user$project$Poc$ChangeLevel = function (a) {
+	return {ctor: 'ChangeLevel', _0: a};
+};
+var _user$project$Poc$Change = function (a) {
+	return {ctor: 'Change', _0: a};
+};
+var _user$project$Poc$tabRow = function (params) {
+	return A2(
+		_elm_lang$html$Html$tr,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$td,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$style(
+						{
+							ctor: '::',
+							_0: {ctor: '_Tuple2', _0: 'width', _1: params.labWidth},
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$label,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$style(
+								{
+									ctor: '::',
+									_0: {ctor: '_Tuple2', _0: 'width', _1: params.labWidth},
+									_1: {ctor: '[]'}
+								}),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(params.labTxt),
+							_1: {ctor: '[]'}
+						}),
+					_1: {ctor: '[]'}
+				}),
+			_1: {
+				ctor: '::',
+				_0: A2(
+					_elm_lang$html$Html$td,
+					{ctor: '[]'},
+					{
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$input,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Events$onInput(
+									_elm_lang$core$Native_Utils.eq(params.inputTypeTxt, 'number') ? _user$project$Poc$ChangeLevel : _user$project$Poc$Change),
+								_1: {
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$type_(params.inputTypeTxt),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$min('0'),
+										_1: {
+											ctor: '::',
+											_0: _elm_lang$html$Html_Attributes$value(params.inputValueTxt),
+											_1: {
+												ctor: '::',
+												_0: _elm_lang$html$Html_Attributes$style(
+													{
+														ctor: '::',
+														_0: {ctor: '_Tuple2', _0: 'width', _1: params.inputWidth},
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							},
+							{ctor: '[]'}),
+						_1: {ctor: '[]'}
+					}),
+				_1: {ctor: '[]'}
+			}
+		});
+};
+var _user$project$Poc$view = function (model) {
+	return A2(
+		_elm_lang$html$Html$div,
+		{ctor: '[]'},
+		{
+			ctor: '::',
+			_0: A2(
+				_elm_lang$html$Html$div,
+				{
+					ctor: '::',
+					_0: _elm_lang$html$Html_Attributes$id('seite'),
+					_1: {ctor: '[]'}
+				},
+				{
+					ctor: '::',
+					_0: A2(
+						_elm_lang$html$Html$div,
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html_Attributes$id('kopfbereich'),
+							_1: {ctor: '[]'}
+						},
+						{
+							ctor: '::',
+							_0: _elm_lang$html$Html$text(
+								A2(
+									_elm_lang$core$Basics_ops['++'],
+									'Elm-Header: ',
+									_elm_lang$core$Basics$toString(model.extvalues))),
+							_1: {ctor: '[]'}
+						}),
+					_1: {
+						ctor: '::',
+						_0: A2(
+							_elm_lang$html$Html$div,
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html_Attributes$id('spaltelinks'),
+								_1: {ctor: '[]'}
+							},
+							{
+								ctor: '::',
+								_0: _elm_lang$html$Html$text('Elm-Spalte links'),
+								_1: {
+									ctor: '::',
+									_0: A2(
+										_elm_lang$html$Html$br,
+										{ctor: '[]'},
+										{ctor: '[]'}),
+									_1: {
+										ctor: '::',
+										_0: A2(
+											_elm_lang$html$Html$table,
+											{ctor: '[]'},
+											{
+												ctor: '::',
+												_0: _user$project$Poc$tabRow(
+													{
+														labTxt: 'Level: ',
+														labWidth: '130px',
+														inputTypeTxt: 'number',
+														inputValueTxt: _elm_lang$core$Basics$toString(model.extPanelLevel),
+														inputWidth: '150px'
+													}),
+												_1: {
+													ctor: '::',
+													_0: _user$project$Poc$tabRow(
+														{labTxt: 'Message to ExtJS: ', labWidth: '130px', inputTypeTxt: '', inputValueTxt: model.title, inputWidth: '150px'}),
+													_1: {ctor: '[]'}
+												}
+											}),
+										_1: {
+											ctor: '::',
+											_0: A2(
+												_elm_lang$html$Html$br,
+												{ctor: '[]'},
+												{ctor: '[]'}),
+											_1: {
+												ctor: '::',
+												_0: A2(
+													_elm_lang$html$Html$button,
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html_Events$onClick(_user$project$Poc$Check),
+														_1: {ctor: '[]'}
+													},
+													{
+														ctor: '::',
+														_0: _elm_lang$html$Html$text(model.btnText),
+														_1: {ctor: '[]'}
+													}),
+												_1: {ctor: '[]'}
+											}
+										}
+									}
+								}
+							}),
+						_1: {
+							ctor: '::',
+							_0: A2(
+								_elm_lang$html$Html$div,
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html_Attributes$id(
+										A2(
+											_elm_lang$core$Basics_ops['++'],
+											'inhalt',
+											_elm_lang$core$Basics$toString(model.extPanelLevel))),
+									_1: {
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$class('inhalt'),
+										_1: {ctor: '[]'}
+									}
+								},
+								{
+									ctor: '::',
+									_0: _elm_lang$html$Html$text('Elm-Spalte mitte'),
+									_1: {ctor: '[]'}
+								}),
+							_1: {
+								ctor: '::',
+								_0: A2(
+									_elm_lang$html$Html$div,
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html_Attributes$id('fussbereich'),
+										_1: {ctor: '[]'}
+									},
+									{
+										ctor: '::',
+										_0: _elm_lang$html$Html$text('Elm-Footer:'),
+										_1: {ctor: '[]'}
+									}),
+								_1: {ctor: '[]'}
+							}
+						}
+					}
+				}),
+			_1: {ctor: '[]'}
+		});
+};
+var _user$project$Poc$main = _elm_lang$html$Html$program(
+	{init: _user$project$Poc$init, view: _user$project$Poc$view, update: _user$project$Poc$update, subscriptions: _user$project$Poc$subscriptions})();
